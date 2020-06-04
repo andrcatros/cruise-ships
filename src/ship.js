@@ -8,13 +8,15 @@ class Ship {
             throw new Error('Itineraries must contain 2 or more ports')
         }
         else {
-            this.internalItinerary = itinerary.ports
+            this.internalItinerary = itinerary.ports;
             this.startingPort = this.internalItinerary[0];
             this.currentPort = this.startingPort;
             this.previousPort = null;
             this.nextPort = null;
+
+            // dock ship in starting port 
+            itinerary.ports[0].addShip(this);
         }
- 
     };
 
     setSail(){
@@ -27,6 +29,9 @@ class Ship {
             this.previousPort = this.currentPort;  
             this.nextPort = this.internalItinerary[this.internalItinerary.indexOf(this.currentPort)+1]
             this.currentPort = null; 
+        // remove ship from current port 
+            this.internalItinerary[this.internalItinerary.indexOf(this.previousPort)].removeShip(this);
+
         } 
     };
 
